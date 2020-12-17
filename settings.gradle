@@ -1,0 +1,3 @@
+rootProject.name = "View Compose Nested Scroll Showcase"
+
+include ':app'
