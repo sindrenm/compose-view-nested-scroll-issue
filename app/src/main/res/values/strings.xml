@@ -1,3 +1,10 @@
 <resources>
+
   <string name="app_name">View Compose Nested Scroll Showcase</string>
+
+  <string name="tab_label_compose">Compose</string>
+  <string name="tab_label_view">View</string>
+
+  <string name="list_item_label">Item number %d</string>
+
 </resources>

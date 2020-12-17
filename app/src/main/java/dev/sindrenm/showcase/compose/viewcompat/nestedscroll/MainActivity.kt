@@ -2,37 +2,35 @@ package dev.sindrenm.showcase.compose.viewcompat.nestedscroll
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.tooling.preview.Preview
-import dev.sindrenm.showcase.compose.viewcompat.nestedscroll.ui.ViewComposeNestedScrollShowcaseTheme
+import com.google.android.material.tabs.TabLayout
+import dev.sindrenm.showcase.compose.viewcompat.nestedscroll.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
+  lateinit var viewBinding: ActivityMainBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContent {
-      ViewComposeNestedScrollShowcaseTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(color = MaterialTheme.colors.background) {
-          Greeting("Android")
+
+    viewBinding = ActivityMainBinding.bind(findViewById(R.id.root))
+
+    viewBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+      override fun onTabSelected(tab: TabLayout.Tab?) {
+        val fragment = when (tab?.position) {
+          0 -> MainComposeFragment()
+          1 -> MainViewFragment()
+          else -> error { "Unsupported" }
         }
+
+        supportFragmentManager
+          .beginTransaction()
+          .replace(R.id.container, fragment)
+          .commit()
       }
-    }
+
+      override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+
+      override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+    })
   }
 }
 
-@Composable
-fun Greeting(name: String) {
-  Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-  ViewComposeNestedScrollShowcaseTheme {
-    Greeting("Android")
-  }
-}
