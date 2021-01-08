@@ -13,6 +13,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     viewBinding = ActivityMainBinding.bind(findViewById(R.id.root))
 
+    supportFragmentManager
+      .beginTransaction()
+      .replace(R.id.container, MainComposeFragment())
+      .commit()
+
     viewBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab?) {
         val fragment = when (tab?.position) {
